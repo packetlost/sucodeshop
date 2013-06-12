@@ -382,3 +382,43 @@ nav a:hover {
         page-break-after: avoid;
     }
 }
+
+
+/* ==========================================================================
+   SUCODE SHOP styles 
+   ========================================================================== */
+
+.first-column,.second-column,.third-column,.fourth-column{
+	width:22%;
+	float:left;
+	padding:10px;
+	font-size:0.8em;
+}
+
+.footer-holder{
+	height:400px;	
+}
+
+.footer-holder p{
+	text-align:justify;	
+}
+
+.footer-holder a {
+    text-decoration: none;
+    font-weight: bold;
+    color: grey;
+}
+
+.footer-holder a:hover a:visited {
+    color: black;
+}
+
+.footer-holder a:hover {
+    text-decoration: underline;
+}
+
+.h3{
+	font-weight: bold;
+	font-size: 1.3em;	
+}
+

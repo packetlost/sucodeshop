@@ -2,109 +2,247 @@
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title>SUCODE software shop</title>
-        <meta name="description" content="SUCODE software online shop for e-commerce">
-        <meta name="viewport" content="width=device-width">
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<!--<![endif]-->
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="description" content="SUCODE software online shop for e-commerce">
+	<meta name="viewport" content="width=device-width">
 
-        <link rel="stylesheet" href="css/normalize.min.css">
-        <link rel="stylesheet" href="css/main.css">
-        <link rel="stylesheet" href="css/smoothness/jquery-ui-1.10.3.custom.min.css">
-
-        <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
-        <script src="js/vendor/jquery-1.9.1.min.js"></script>
-        <script src="js/vendor/jquery-ui-1.10.3.custom.min.js"></script>
-        <script src="js/vendor/simpleCart.min.js"></script>
-        <script src="js/plugins.js"></script>
-        <script src="js/main.js"></script>
-    </head>
-    <body>
-        <!--[if lt IE 7]>
+	<title>SUCODE software shop</title>
+	
+	<link rel="stylesheet" href="css/normalize.min.css">
+	<link rel="stylesheet" href="css/main.css">
+	<link rel="stylesheet" href="css/smoothness/jquery-ui-1.10.3.custom.min.css">
+	<link rel="stylesheet" href="css/productgridlayout/default.css">
+	<link rel="stylesheet" href="css/productgridlayout/component.css">
+	
+	<script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+	<script src="js/vendor/jquery-1.9.1.min.js"></script>
+	<script src="js/vendor/jquery-ui-1.10.3.custom.min.js"></script>
+	<script src="js/vendor/simpleCart.min.js"></script>
+	<script src="js/vendor/cbpShop.min.js"></script>
+	<script src="js/plugins.js"></script>
+	<script src="js/main.js"></script>
+</head>
+<body>
+	<!--[if lt IE 7]>
             <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
         <![endif]-->
 
-        <div class="header-container">
-            <header class="wrapper clearfix">
-            	<img src="img/logo.png"></img>
-                <!--  <h1 class="title"></h1> -->
-                <!--  
-                <nav>
-                    <ul>
-                        <li><a href="#">Categories</a></li>
-                        <li><a href="#">Products</a></li>
-                    </ul>
-                </nav>
-                -->
-            </header> 
-        </div>
-
-        <div class="main-container">
-            <div class="main wrapper clearfix">
-  			
-  				<!--  
-                <article>
-                    <header>
-                        <h1>article header h1</h1>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sodales urna non odio egestas tempor. Nunc vel vehicula ante. Etiam bibendum iaculis libero, eget molestie nisl pharetra in. In semper consequat est, eu porta velit mollis nec.</p>
-                    </header>
-                    <section>
-                        <h2>article section h2</h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sodales urna non odio egestas tempor. Nunc vel vehicula ante. Etiam bibendum iaculis libero, eget molestie nisl pharetra in. In semper consequat est, eu porta velit mollis nec. Curabitur posuere enim eget turpis feugiat tempor. Etiam ullamcorper lorem dapibus velit suscipit ultrices. Proin in est sed erat facilisis pharetra.</p>
-                    </section>
-                    <section>
-                        <h2>article section h2</h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sodales urna non odio egestas tempor. Nunc vel vehicula ante. Etiam bibendum iaculis libero, eget molestie nisl pharetra in. In semper consequat est, eu porta velit mollis nec. Curabitur posuere enim eget turpis feugiat tempor. Etiam ullamcorper lorem dapibus velit suscipit ultrices. Proin in est sed erat facilisis pharetra.</p>
-                    </section>
-                    <footer>
-                        <h3>article footer h3</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sodales urna non odio egestas tempor. Nunc vel vehicula ante. Etiam bibendum iaculis libero, eget molestie nisl pharetra in. In semper consequat est, eu porta velit mollis nec. Curabitur posuere enim eget turpis feugiat tempor.</p>
-                    </footer>
-                </article>
-
-                <aside>
-                    <h3>aside</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sodales urna non odio egestas tempor. Nunc vel vehicula ante. Etiam bibendum iaculis libero, eget molestie nisl pharetra in. In semper consequat est, eu porta velit mollis nec. Curabitur posuere enim eget turpis feugiat tempor. Etiam ullamcorper lorem dapibus velit suscipit ultrices.</p>
-                </aside>
-				-->
-				<script>
-					$(function() {
-						$( "#categories" ).buttonset();
-					});
-				</script>
-				<div id="categories_container">	
-					<div id="categories">
-						<input type="radio" name="category" id="c1" checked="checked"/><label for="c1">Category 1</label>
-						<input type="radio" name="category" id="c2" /><label for="c2">Category 2</label>
-						<input type="radio" name="category" id="c3" /><label for="c3">Category 3</label>
-						<input type="radio" name="category" id="c4" /><label for="c4">Category 4</label>
-						<input type="radio" name="category" id="c5" /><label for="c5">Category 5</label>
-					</div>
-				</div>
-				<br/>
-				<div id="products">
+	<div class="header-container">
+		<header class="wrapper clearfix">
+			<a href="index.html"><img src="img/logo.png"></img></a>
+			<!--  <h1 class="title"></h1> -->
+			<nav>
+				<div id="cart">
 					
 				</div>
-            </div> <!-- #main -->
-        </div> <!-- #main-container -->
+			</nav>
+		</header>
+	</div>
 
-        <div class="footer-container">
-            <footer class="wrapper">
-                <h3>footer</h3>
-            </footer>
-        </div>
+	<div class="main-container">
+		<div class="main wrapper clearfix">
+			<script>
+				$(function() {
+					$("#categories").buttonset();
+				});
+			</script>
+			<div id="categories_container">
+				<div id="categories">
+					<input type="radio" name="category" id="c1" checked="checked" />
+					<label for="c1">Virtualization</label> 
+					<input type="radio" name="category"	id="c2" />
+					<label for="c2">Architectures</label> 
+					<input type="radio"	name="category" id="c3" />
+					<label for="c3">Applications</label> 
+					<input	type="radio" name="category" id="c4" />
+					<label for="c4">SaaS</label> 
+					<input type="radio" name="category" id="c5" />
+					<label for="c5">Training</label>
+				</div>
+			</div>
+			<br />
+			<div id="products">
+				<div id="cbp-pgcontainer" class="cbp-pgcontainer">
+					<ul class="cbp-pggrid">
+						<li>
+							<div class="cbp-pgcontent">
+								<div class="cbp-pgitem">
+									<div class="cbp-pgitem-flip">
+										<img src="img/products/product.png" />
+									</div>
+								</div><!-- /cbp-pgitem -->
+								<ul class="cbp-pgoptions">	  								
+									<li class="cbp-pgdetails"></li>
+									<li class="cbp-pgoptcart"></li>
+								</ul>
+								<!-- cbp-pgoptions -->
+							</div><!-- cbp-pgcontent -->
+							<div class="cbp-pginfo">
+								<h3>Product 1</h3>
+								<span class="cbp-pgprice">300€</span>
+							</div>
+						</li>
+						<li>
+							<div class="cbp-pgcontent">
+								<div class="cbp-pgitem">
+									<div class="cbp-pgitem-flip">
+										<img src="img/products/product.png" />
+									</div>
+								</div><!-- /cbp-pgitem -->
+								<ul class="cbp-pgoptions">	  								
+									<li class="cbp-pgdetails"></li>
+									<li class="cbp-pgoptcart"></li>
+								</ul>
+								<!-- cbp-pgoptions -->
+							</div><!-- cbp-pgcontent -->
+							<div class="cbp-pginfo">
+								<h3>Product 2</h3>
+								<span class="cbp-pgprice">300€</span>
+							</div>
+						</li>
+						<li>
+							<div class="cbp-pgcontent">
+								<div class="cbp-pgitem">
+									<div class="cbp-pgitem-flip">
+										<img src="img/products/product.png" />
+									</div>
+								</div><!-- /cbp-pgitem -->
+								<ul class="cbp-pgoptions">	  								
+									<li class="cbp-pgdetails"></li>
+									<li class="cbp-pgoptcart"></li>
+								</ul>
+								<!-- cbp-pgoptions -->
+							</div><!-- cbp-pgcontent -->
+							<div class="cbp-pginfo">
+								<h3>Product 3</h3>
+								<span class="cbp-pgprice">300€</span>
+							</div>
+						</li>
+						<li>
+							<div class="cbp-pgcontent">
+								<div class="cbp-pgitem">
+									<div class="cbp-pgitem-flip">
+										<img src="img/products/product.png" />
+									</div>
+								</div><!-- /cbp-pgitem -->
+								<ul class="cbp-pgoptions">	  								
+									<li class="cbp-pgdetails"></li>
+									<li class="cbp-pgoptcart"></li>
+								</ul>
+								<!-- cbp-pgoptions -->
+							</div><!-- cbp-pgcontent -->
+							<div class="cbp-pginfo">
+								<h3>Product 4</h3>
+								<span class="cbp-pgprice">300€</span>
+							</div>
+						</li>
+						<li>
+							<div class="cbp-pgcontent">
+								<div class="cbp-pgitem">
+									<div class="cbp-pgitem-flip">
+										<img src="img/products/product.png" />
+									</div>
+								</div><!-- /cbp-pgitem -->
+								<ul class="cbp-pgoptions">	  								
+									<li class="cbp-pgdetails"></li>
+									<li class="cbp-pgoptcart"></li>
+								</ul>
+								<!-- cbp-pgoptions -->
+							</div><!-- cbp-pgcontent -->
+							<div class="cbp-pginfo">
+								<h3>Product 5</h3>
+								<span class="cbp-pgprice">300€</span>
+							</div>
+						</li>
+						<li>
+							<div class="cbp-pgcontent">
+								<div class="cbp-pgitem">
+									<div class="cbp-pgitem-flip">
+										<img src="img/products/product.png" />
+									</div>
+								</div><!-- /cbp-pgitem -->
+								<ul class="cbp-pgoptions">	  								
+									<li></li>
+									<li></li>
+								</ul>
+								<!-- cbp-pgoptions -->
+							</div><!-- cbp-pgcontent -->
+							<div class="cbp-pginfo">
+								<h3>Product 6</h3>
+								<span class="cbp-pgprice">300€</span>
+							</div>
+						</li>
+					</ul><!-- /cbp-pggrid -->
+				</div><!-- /cbp-pgcontainer -->
+			</div>
+			<script>
+				var shop = new cbpShop( document.getElementById( 'cbp-pgcontainer' ) ); 
+			</script>
+		</div><!-- #main -->
+	</div><!-- #main-container -->
 
-		<!--  Uncomment after setting your google analytics id -->
-		<!--  
+	<div class="footer-container">
+		<footer class="wrapper">
+			<div class="footer-holder">
+				<div class="first-column">
+					<span class="h3">About</span>
+					<p>SUCODE shop is a ligthweight and simple e-commerce shopping cart with easy integration in any web site.</p>
+					<p>It has been developed with</p> 
+					<ul>
+						<li><a href="http://www.initializr.com/" target="_blank">Initialzr</a> 
+						<li><a href="http://html5boilerplate.com/" target="_blank">H5BP</a> 
+						<li><a href="http://jqueryui.com/" target="_blank">jQuery UI</a> 
+						<li><a href="http://simplecartjs.org/" target="_blank">SimpleCart(JS)</a>
+						<li><a href="http://tympanus.net/codrops/2013/05/17/product-grid-layout/" target="_blank">Product Grid Layout</a>
+					</ul>
+					<span class="copy">&copy; 2013 SUCODE Software</span>
+				</div>
+				<div class="second-column">
+					<span class="h3">Company</span>
+					<ul>
+						<li><a href="http://www.sucode.net/" target="_blank">About</a> 
+						<li><a href="http://www.sucode.net/index.php?option=com_content&view=article&id=20&Itemid=106" target="_blank">Technologies</a> 
+						<li><a href="http://www.sucode.net/index.php?option=com_content&view=article&id=9&Itemid=104" target="_blank">Labs</a> 
+						<li><a href="http://www.sucode.net/index.php?option=com_content&view=article&id=16&Itemid=105" target="_blank">Products</a>
+						<li><a href="http://www.sucode.net/index.php?option=com_content&view=article&id=12&Itemid=102" target="_blank">Services</a>						
+					</ul>
+				</div>
+				<div class="third-column">
+					<span class="h3">Resources</span>
+					<ul>
+						<li><a href="http://www.sucode.net/legal.html" target="_blank">Legal</a> 
+						<li><a href="http://www.sucode.net/privacy.html" target="_blank">Privacy</a> 
+					</ul>
+				</div>
+				<div class="fourth-column">
+					<span class="h3">Contact</span>
+					<p>
+					If you need more info, you can <a href="http://sucode.net/index.php?option=com_content&view=article&id=6&Itemid=108" target="_blank">contact</a> 
+					us or follow us in social media.  
+					</p>
+					<p>
+						<a href="https://twitter.com/sucodesoftware" target="_blank"><img src="img/icons_32x32px/twitter_2.png"></img></a>
+						<a href="http://sucodesoftware.blogspot.com.es/" target="_blank"><img src="img/icons_32x32px/blogger.png"></img></a>
+					</p>
+				</div>
+			</div><!-- footer-holder -->
+		</footer>
+	</div>
+
+	<!--  Uncomment after setting your google analytics account -->
+	<!--  
         <script>
-            var _gaq=[['_setAccount','your-google-analytics-id'],['_trackPageview']];
+            var _gaq=[['_setAccount','your-google-analytics-account'],['_trackPageview']];
             (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
             g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
             s.parentNode.insertBefore(g,s)}(document,'script'));
         </script>
         -->
-        
-    </body>
+
+</body>
 </html>
