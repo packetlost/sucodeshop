@@ -24,33 +24,123 @@
 	<script src="js/vendor/jquery-ui-1.10.3.custom.min.js"></script>
 	<script src="js/vendor/simpleCart.min.js"></script>
 	<script src="js/vendor/cbpShop.min.js"></script>
+	<script src="js/sucodeshop-config.js"></script>	
 	<script src="js/plugins.js"></script>
 	<script src="js/main.js"></script>
+	<script>
+		// ---------------------------
+		// SIMPLECARTJS CONFIGURATION
+		// ---------------------------
+		simpleCart({
+			// array representing the format and columns of the cart,
+			// see the cart columns documentation
+			cartColumns: [
+				{ attr: "name", label: "Name"},
+				{ view: "currency", attr: "price", label: "Price"},
+				{ view: "decrement", label: false},
+				{ attr: "quantity", label: "Qty"},
+				{ view: "increment", label: false},
+				{ view: "currency", attr: "total", label: "SubTotal" },
+				{ view: "remove", text: "Remove", label: false}
+			],
+	
+			// "div" or "table" - builds the cart as a 
+			// table or collection of divs
+			cartStyle: "div", 
+	
+			// how simpleCart should checkout, see the 
+			// checkout reference for more info 
+			checkout: { 
+				type: "PayPal" , 
+				email: "you@yours.com" 
+			},
+	
+			// set the currency, see the currency 
+			// reference for more info
+			currency: "EUR",
+	
+			// collection of arbitrary data you may want to store 
+			// with the cart, such as customer info
+			data: {},
+	
+			// set the cart langauge 
+			// (may be used for checkout)
+			language: "english-us",
+	
+			// array of item fields that will not be 
+			// sent to checkout
+			excludeFromCheckout: [],
+	
+			// custom function to add shipping cost
+			shippingCustom: null,
+	
+			// flat rate shipping option
+			shippingFlatRate: 0,
+	
+			// added shipping based on this value 
+			// multiplied by the cart quantity
+			shippingQuantityRate: 0,
+	
+			// added shipping based on this value 
+			// multiplied by the cart subtotal
+			shippingTotalRate: 0.21,
+	
+			// tax rate applied to cart subtotal
+			taxRate: 0.21,
+	
+			// true if tax should be applied to shipping
+			taxShipping: false,
+	
+			// event callbacks 
+			beforeAdd			: null,
+			afterAdd			: null,
+			load				: null,
+			beforeSave			: null,
+			afterSave			: null,
+			update				: null,
+			ready				: null,
+			checkoutSuccess		: null,
+			checkoutFail		: null,
+			beforeCheckout		: null,
+		    beforeRemove        : null
+		});
+		
+		//config product details dialog
+		$(function(){
+			$(".cbp-pgdetails").click(function(){
+				$("#view-details").dialog("open");		
+			});	
+		});
+	</script>
 </head>
 <body>
 	<!--[if lt IE 7]>
             <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
         <![endif]-->
-
 	<div class="header-container">
 		<header class="wrapper clearfix">
 			<a href="index.html"><img src="img/logo.png"></img></a>
 			<!--  <h1 class="title"></h1> -->
 			<nav>
 				<div id="cart">
-					
+					<button id="btncart">
+						<img src="img/shopping-cart-icon.png"></img> <span class="simpleCart_quantity"></span> items - <span class="simpleCart_total"></span>
+					</button>
 				</div>
 			</nav>
+			<script>
+				$("#btncart").button();
+				$("#btncart").click(
+					function(){
+				    	$("#view-cart").dialog("open");
+				    }
+				);
+			</script>
 		</header>
 	</div>
 
 	<div class="main-container">
 		<div class="main wrapper clearfix">
-			<script>
-				$(function() {
-					$("#categories").buttonset();
-				});
-			</script>
 			<div id="categories_container">
 				<div id="categories">
 					<input type="radio" name="category" id="c1" checked="checked" />
@@ -65,11 +155,20 @@
 					<label for="c5">Training</label>
 				</div>
 			</div>
-			<br />
+			<script>
+				$(function() {
+					$("#categories").buttonset();
+				});
+			</script>
 			<div id="products">
+				<div id="messages" style="visibility:hidden; margin-top: 20px; padding: 0 .7em;" class="ui-state-highlight ui-corner-all">
+					<span style="float: left; margin-right: .3em;" class="ui-icon ui-icon-info"></span>
+					There are no products for the selected category.
+				</div>	
 				<div id="cbp-pgcontainer" class="cbp-pgcontainer">
 					<ul class="cbp-pggrid">
-						<li>
+						<li class="simpleCart_shelfItem">
+							<input value="1" class="item_Quantity" type="hidden"/>
 							<div class="cbp-pgcontent">
 								<div class="cbp-pgitem">
 									<div class="cbp-pgitem-flip">
@@ -77,17 +176,22 @@
 									</div>
 								</div><!-- /cbp-pgitem -->
 								<ul class="cbp-pgoptions">	  								
-									<li class="cbp-pgdetails"></li>
-									<li class="cbp-pgoptcart"></li>
+									<li class="cbp-pgdetails">
+										<img src="img/document.png"></img> Details
+									</li> 
+									<li class="cbp-pgoptcart item_add">
+										<img src="img/addtocart.png"></img> Add
+									</li>
 								</ul>
 								<!-- cbp-pgoptions -->
 							</div><!-- cbp-pgcontent -->
 							<div class="cbp-pginfo">
-								<h3>Product 1</h3>
-								<span class="cbp-pgprice">300€</span>
+								<h3 class="item_name">Product 1</h3>
+								<span class="cbp-pgprice item_price">300€</span>
 							</div>
 						</li>
-						<li>
+						<li class="simpleCart_shelfItem">
+							<input value="1" class="item_Quantity" type="hidden"/>
 							<div class="cbp-pgcontent">
 								<div class="cbp-pgitem">
 									<div class="cbp-pgitem-flip">
@@ -95,17 +199,22 @@
 									</div>
 								</div><!-- /cbp-pgitem -->
 								<ul class="cbp-pgoptions">	  								
-									<li class="cbp-pgdetails"></li>
-									<li class="cbp-pgoptcart"></li>
+									<li class="cbp-pgdetails">
+										<img src="img/document.png"></img> Details
+									</li>
+									<li class="cbp-pgoptcart item_add">
+										<img src="img/addtocart.png"></img> Add
+									</li>
 								</ul>
 								<!-- cbp-pgoptions -->
 							</div><!-- cbp-pgcontent -->
 							<div class="cbp-pginfo">
-								<h3>Product 2</h3>
-								<span class="cbp-pgprice">300€</span>
+								<h3 class="item_name">Product 2</h3>
+								<span class="cbp-pgprice item_price">300€</span>
 							</div>
 						</li>
-						<li>
+						<li class="simpleCart_shelfItem">
+							<input value="1" class="item_Quantity" type="hidden"/>
 							<div class="cbp-pgcontent">
 								<div class="cbp-pgitem">
 									<div class="cbp-pgitem-flip">
@@ -113,17 +222,22 @@
 									</div>
 								</div><!-- /cbp-pgitem -->
 								<ul class="cbp-pgoptions">	  								
-									<li class="cbp-pgdetails"></li>
-									<li class="cbp-pgoptcart"></li>
+									<li class="cbp-pgdetails">
+										<img src="img/document.png"></img> Details
+									</li>
+									<li class="cbp-pgoptcart item_add">
+										<img src="img/addtocart.png"></img> Add
+									</li>
 								</ul>
 								<!-- cbp-pgoptions -->
 							</div><!-- cbp-pgcontent -->
 							<div class="cbp-pginfo">
-								<h3>Product 3</h3>
-								<span class="cbp-pgprice">300€</span>
+								<h3 class="item_name">Product 3</h3>
+								<span class="cbp-pgprice item_price">300€</span>
 							</div>
 						</li>
-						<li>
+						<li class="simpleCart_shelfItem">
+							<input value="1" class="item_Quantity" type="hidden"/>
 							<div class="cbp-pgcontent">
 								<div class="cbp-pgitem">
 									<div class="cbp-pgitem-flip">
@@ -131,17 +245,22 @@
 									</div>
 								</div><!-- /cbp-pgitem -->
 								<ul class="cbp-pgoptions">	  								
-									<li class="cbp-pgdetails"></li>
-									<li class="cbp-pgoptcart"></li>
+									<li class="cbp-pgdetails">
+										<img src="img/document.png"></img> Details
+									</li>
+									<li class="cbp-pgoptcart item_add">
+										<img src="img/addtocart.png"></img> Add
+									</li>
 								</ul>
 								<!-- cbp-pgoptions -->
 							</div><!-- cbp-pgcontent -->
 							<div class="cbp-pginfo">
-								<h3>Product 4</h3>
-								<span class="cbp-pgprice">300€</span>
+								<h3 class="item_name">Product 4</h3>
+								<span class="cbp-pgprice item_price">300€</span>
 							</div>
 						</li>
-						<li>
+						<li class="simpleCart_shelfItem">
+							<input value="1" class="item_Quantity" type="hidden"/>
 							<div class="cbp-pgcontent">
 								<div class="cbp-pgitem">
 									<div class="cbp-pgitem-flip">
@@ -149,17 +268,22 @@
 									</div>
 								</div><!-- /cbp-pgitem -->
 								<ul class="cbp-pgoptions">	  								
-									<li class="cbp-pgdetails"></li>
-									<li class="cbp-pgoptcart"></li>
+									<li class="cbp-pgdetails">
+										<img src="img/document.png"></img> Details
+									</li>
+									<li class="cbp-pgoptcart item_add">
+										<img src="img/addtocart.png"></img> Add
+									</li>
 								</ul>
 								<!-- cbp-pgoptions -->
 							</div><!-- cbp-pgcontent -->
 							<div class="cbp-pginfo">
-								<h3>Product 5</h3>
-								<span class="cbp-pgprice">300€</span>
+								<h3 class="item_name">Product 5</h3>
+								<span class="cbp-pgprice item_price">300€</span>
 							</div>
 						</li>
-						<li>
+						<li class="simpleCart_shelfItem">
+							<input value="1" class="item_Quantity" type="hidden"/>
 							<div class="cbp-pgcontent">
 								<div class="cbp-pgitem">
 									<div class="cbp-pgitem-flip">
@@ -167,14 +291,18 @@
 									</div>
 								</div><!-- /cbp-pgitem -->
 								<ul class="cbp-pgoptions">	  								
-									<li></li>
-									<li></li>
+									<li class="cbp-pgdetails">
+										<img src="img/document.png"></img> Details
+									</li>
+									<li class="cbp-pgoptcart item_add">
+										<img src="img/addtocart.png"></img> Add
+									</li>
 								</ul>
 								<!-- cbp-pgoptions -->
 							</div><!-- cbp-pgcontent -->
 							<div class="cbp-pginfo">
-								<h3>Product 6</h3>
-								<span class="cbp-pgprice">300€</span>
+								<h3 class="item_name">Product 6</h3>
+								<span class="cbp-pgprice item_price">300€</span>
 							</div>
 						</li>
 					</ul><!-- /cbp-pggrid -->
@@ -229,10 +357,66 @@
 						<a href="https://twitter.com/sucodesoftware" target="_blank"><img src="img/icons_32x32px/twitter_2.png"></img></a>
 						<a href="http://sucodesoftware.blogspot.com.es/" target="_blank"><img src="img/icons_32x32px/blogger.png"></img></a>
 					</p>
-				</div>
+				</div> 
 			</div><!-- footer-holder -->
+			<div id="back-to-top"><a href="#cart"><img src="img/arrow_up.png"></img></a></div>
 		</footer>
 	</div>
+
+	<!-- Dialogs defined here -->
+	<div id="view-cart" title="Your shopping cart">
+		<!-- create a checkout button -->
+		<a href="javascript:;" class="simpleCart_checkout"></a>
+		
+		<!-- button to empty the cart -->
+		<a href="javascript:;" class="simpleCart_empty"></a>
+		
+		<!-- show the cart -->
+		<div class="simpleCart_items"></div>
+		
+		<!-- cart total (ex. $23.11)-->
+		<div class="simpleCart_total"></div>
+		
+		<!-- cart quantity (ex. 3) -->
+		<div class="simpleCart_quantity"></div>
+		
+		<!-- tax cost (ex. $1.38) -->
+		<div class="simpleCart_tax"></div>
+		
+		<!-- tax rate (ex. %0.6) -->
+		<div class="simpleCart_taxRate"></div>
+		
+		<!-- shipping (ex. $5.00) -->
+		<div class="simpleCart_shipping"></div>
+		
+		<!-- grand total, including tax and shipping (ex. $28.49) -->
+		<div class="simpleCart_grandTotal"></div>
+	</div>
+	<script>
+		$( "#view-cart" ).dialog({
+				autoOpen:false,
+				modal:true,
+				closeOnEscape:true,
+				resizable:true,
+				draggable:true,
+				width:400
+		});
+	</script>
+	<div id="view-details" title="Product details">
+		<p>
+		Product details here.
+		</p>
+	</div>
+	<script>
+		$( "#view-details" ).dialog({
+				autoOpen:false,
+				modal:true,
+				closeOnEscape:true,
+				resizable:true,
+				draggable:true,
+				width:400
+		});
+	</script>
 
 	<!--  Uncomment after setting your google analytics account -->
 	<!--  

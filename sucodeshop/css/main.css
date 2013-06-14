@@ -422,3 +422,19 @@ nav a:hover {
 	font-size: 1.3em;	
 }
 
+#cart{
+	padding:20px 20px 20px 20px;
+}
+
+#back-to-top{
+	text-align:right;
+}
+
+#view-cart{
+	display:none;
+}
+
+#view-details{
+	display:none;
+}
+

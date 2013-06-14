@@ -196,7 +196,8 @@
 } 
 
 .no-touch .cbp-pgoptions li {
-	color: #cccccc;
+	color: #555555;
+	text-decoration:bold;
 }
 
 .no-touch .cbp-pgoptions li:hover,
