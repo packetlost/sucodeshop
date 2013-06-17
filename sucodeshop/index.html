@@ -51,8 +51,23 @@
 			// how simpleCart should checkout, see the 
 			// checkout reference for more info 
 			checkout: { 
-				type: "PayPal" , 
-				email: "you@yours.com" 
+				type: "SendForm" , 
+				url: "http://yourserver/your/custom/checkout/url",
+
+				 // http method for form, "POST" or "GET", default is "POST"
+		        method: "POST" , 
+
+		        // url to return to on successful checkout, default is null
+		        success: null, 
+
+		        // url to return to on cancelled checkout, default is null
+		        cancel: null ,
+
+		        // an option list of extra name/value pairs that can
+		        // be sent along with the checkout data
+		        extra_data: {
+		          email: $("email").val()
+		        }				 
 			},
 	
 			// set the currency, see the currency 
@@ -83,13 +98,13 @@
 	
 			// added shipping based on this value 
 			// multiplied by the cart subtotal
-			shippingTotalRate: 0.21,
+			shippingTotalRate: 0,
 	
 			// tax rate applied to cart subtotal
 			taxRate: 0.21,
 	
 			// true if tax should be applied to shipping
-			taxShipping: false,
+			taxShipping: true,
 	
 			// event callbacks 
 			beforeAdd			: null,
@@ -108,6 +123,20 @@
 		//config product details dialog
 		$(function(){
 			$(".cbp-pgdetails").click(function(){
+				$( "#view-details" ).dialog({
+					autoOpen:false,
+					modal:true,
+					closeOnEscape:true,
+					resizable:true,
+					draggable:true,
+					width:600,
+					buttons: [ { 
+						text: "Close", 
+						click: function() { 
+							$( this ).dialog( "close" ); 
+						} 
+					} ]
+				});
 				$("#view-details").dialog("open");		
 			});	
 		});
@@ -132,6 +161,14 @@
 				$("#btncart").button();
 				$("#btncart").click(
 					function(){
+						$( "#view-cart" ).dialog({
+							autoOpen:false,
+							modal:true,
+							closeOnEscape:true,
+							resizable:true,
+							draggable:true,
+							width:600
+						});
 				    	$("#view-cart").dialog("open");
 				    }
 				);
@@ -365,58 +402,96 @@
 
 	<!-- Dialogs defined here -->
 	<div id="view-cart" title="Your shopping cart">
-		<!-- create a checkout button -->
-		<a href="javascript:;" class="simpleCart_checkout"></a>
-		
-		<!-- button to empty the cart -->
-		<a href="javascript:;" class="simpleCart_empty"></a>
-		
 		<!-- show the cart -->
 		<div class="simpleCart_items"></div>
 		
-		<!-- cart total (ex. $23.11)-->
-		<div class="simpleCart_total"></div>
+		<div class="h-bar"></div>
 		
+		<div class="pre-totals"></div>
+
 		<!-- cart quantity (ex. 3) -->
-		<div class="simpleCart_quantity"></div>
+		<div class="simpleCart_quantity popupcartquantity"></div>
+
+		<div class="intra-totals"></div>
+		
+		<!-- cart total (ex. $23.11)-->
+		<div class="simpleCart_total popupcarttotal"></div>
+		
+		<div class="post-totals"></div>
+
+		<div class="pre-totals"></div>
+
+		<!-- tax rate (ex. %0.6) -->
+		<!-- 
+			simpleCart_taxRate and simpleCart.taxRate() are not working. 
+			We must tell which taxes are applied manually. 
+		-->
+		<div class="taxes">
+			VAT (21%)
+		</div>
+		
+		<div class="intra-totals"></div>
 		
 		<!-- tax cost (ex. $1.38) -->
-		<div class="simpleCart_tax"></div>
+		<div class="simpleCart_tax popupcarttotal"></div>
 		
-		<!-- tax rate (ex. %0.6) -->
-		<div class="simpleCart_taxRate"></div>
+		<div class="post-totals"></div>
+
+		<div class="pre-totals"></div>
+
+		<div class="total">
+			TOTAL
+		</div>
 		
-		<!-- shipping (ex. $5.00) -->
-		<div class="simpleCart_shipping"></div>
+		<div class="intra-totals"></div>
 		
 		<!-- grand total, including tax and shipping (ex. $28.49) -->
-		<div class="simpleCart_grandTotal"></div>
+		<div class="simpleCart_grandTotal popupcarttotal"></div>
+		
+		<div class="post-totals"></div>
+
+		<div class="h-bar"></div>		
+	
+		<div class="separator"></div>
+
+		<div class="cart_additional_data">
+			<span class="cart_label">E-mail: </span>
+			<input type="text" name="email" id="email" size="30" maxlength="50" class="ui-widget"/>
+		</div>
+
+		<div class="separator"></div>
+		
+		<div class="h-bar"></div>		
+	
+		<div class="separator"></div>
+	
+		<div id="view-cart-buttons">	
+			<!-- create a checkout button -->
+			<a href="javascript:;" class="simpleCart_checkout">
+				<button id="btncart_checkout">
+					Checkout
+				</button> 
+			</a>
+			<!-- button to empty the cart -->
+			<a href="javascript:;" class="simpleCart_empty">
+				<button id="btncart_empty">
+					Clear
+				</button> 
+			</a>
+		</div>	
 	</div>
 	<script>
-		$( "#view-cart" ).dialog({
-				autoOpen:false,
-				modal:true,
-				closeOnEscape:true,
-				resizable:true,
-				draggable:true,
-				width:400
-		});
+		$( "#btncart_checkout" ).button();
+		$( "#btncart_empty" ).button();
 	</script>
 	<div id="view-details" title="Product details">
-		<p>
-		Product details here.
-		</p>
+		Product details here. details details details details details details details details details details details details
+		details details details details details details details details details details details details
+		details details details details details details details details details details details details
+		details details details details details details details details details details details details
+ 		details details details details details details details details details details details details
+		details details details details details details details details details details details details
 	</div>
-	<script>
-		$( "#view-details" ).dialog({
-				autoOpen:false,
-				modal:true,
-				closeOnEscape:true,
-				resizable:true,
-				draggable:true,
-				width:400
-		});
-	</script>
 
 	<!--  Uncomment after setting your google analytics account -->
 	<!--  

@@ -432,9 +432,121 @@ nav a:hover {
 
 #view-cart{
 	display:none;
+	text-align:justify;
+	font-size:0.8em;
 }
 
 #view-details{
 	display:none;
+	text-align:justify;
+	font-size:0.8em;
 }
 
+#view-cart-buttons{
+	text-align:right;
+}
+
+.item-name,.item-price,.item-decrement,.item-quantity,.item-increment,.item-total,.item-remove{
+	float:left;
+	padding:1px;
+	height:100%;
+	text-align:center;	
+}
+
+.item-name,.item-price,.item-total,.item-remove,.item-quantity{
+	width:18%;	
+}
+
+.item-decrement,.item-increment{
+	width:5%;	
+}
+
+.headerRow,.itemRow{
+	height:25px;
+}
+
+.headerRow{
+	background:#555555;
+	color:#ffffff;
+	text-align:center;
+	font-weight:bold;
+}
+
+#btncart_checkout,#btncart_empty{
+	font-weight:bold;
+}
+
+.h-bar{
+	background:#cccccc;
+	padding:1px;
+	float:left;
+	width:100%;
+}
+
+.popupcartquantity{
+	width:18%;
+	float:left;
+	text-align:center;
+	height:25px;		
+}
+
+.popupcarttotal{
+	width:18%;
+	float:left;
+	text-align:center;
+	padding: 1px;
+	height:25px;		
+}
+
+.intra-totals{
+	width:5%;
+	float:left;
+	text-align:center;
+	padding: 1px;
+	height:25px;		
+}
+
+.pre-totals{
+	width:41%;
+	float:left;
+	text-align:center;
+	padding: 1px;
+	height:25px;		
+}
+
+.post-totals{
+	width:18%;
+	float:left;
+	text-align:center;
+	padding: 1px;	
+	height:25px;
+}
+
+.taxes{
+	width:18%;
+	float:left;
+	text-align:center;
+	padding: 1px;	
+	height:25px;
+}
+
+.total{
+	width:18%;
+	float:left;
+	text-align:center;
+	padding: 1px;	
+	height:25px;
+	font-weight:bold;
+}
+
+.separator{
+	width:100%;
+	float:left;
+	text-align:center;
+	padding: 1px;	
+	height:25px;
+}
+
+.cart_label{
+	font-weight:bold;
+}
