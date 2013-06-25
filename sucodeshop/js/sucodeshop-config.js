@@ -15,6 +15,8 @@ var checkoutMethod = "POST";
 var categoriesService = '/shop/json/categories.json';
 // If the products service depends on the category id, use {id}. For example:'/shop/json/products/{id}.json','/shop/json/products/getProducts?categoryId={id}',...
 var productsService = '/shop/json/products/{id}.json';
+// image logo
+var shopLogo = 'img/logo.png';
 // Products images format
 var imgFormat = 'png';
 // Tax to apply to cart total (VAT)   

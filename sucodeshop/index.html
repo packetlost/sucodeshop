@@ -200,7 +200,7 @@
 				productsHtml+="<li class=\"simpleCart_shelfItem\">";
 				productsHtml+="<input value=\"1\" class=\"item_Quantity\" type=\"hidden\"/>";
 				productsHtml+="<div class=\"cbp-pgcontent\"><div class=\"cbp-pgitem\"><div class=\"cbp-pgitem-flip\">";
-				productsHtml+="<img src=\"img/products/"+productsToPrint[i].id+".png\"/></div></div>";
+				productsHtml+="<img src=\"img/products/"+productsToPrint[i].id+"."+imgFormat+"\"/></div></div>";
 				productsHtml+="<ul class=\"cbp-pgoptions\"><li class=\"cbp-pgdetails\" prod=\""+productsToPrint[i].id+"\"><img src=\"img/document.png\"></img> Details </li>";
 				productsHtml+="<li class=\"cbp-pgoptcart item_add\"><img src=\"img/addtocart.png\"></img> Add </li></ul></div>";
 				productsHtml+="<div class=\"cbp-pginfo\"><h3 class=\"item_name\">"+productsToPrint[i].name+"</h3>";
@@ -218,7 +218,9 @@
         <![endif]-->
 	<div class="header-container">
 		<header class="wrapper clearfix">
-			<a href="index.html"><img src="img/logo.png"></img></a>
+			<script>
+				document.write("<a href=\"index.html\"><img src=\""+shopLogo+"\"></img></a>");
+			</script>
 			<nav>
 				<div id="cart">
 					<button id="btncart">
