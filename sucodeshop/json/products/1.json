@@ -1,0 +1,38 @@
+[
+	{
+		"id":"1",
+		"price":"300€",
+		"name":"Product 1",
+		"details":"Details of product 1"
+	},
+	{
+		"id":"2",
+		"price":"300€",
+		"name":"Product 2",
+		"details":"Details of product 2"
+	},
+	{
+		"id":"3",
+		"price":"300€",
+		"name":"Product 3",
+		"details":"Details of product 3"
+	},
+	{
+		"id":"4",
+		"price":"300€",
+		"name":"Product 4",
+		"details":"Details of product 4"
+	},
+	{
+		"id":"5",
+		"price":"300€",
+		"name":"Product 5",
+		"details":"Details of product 5"
+	},
+	{
+		"id":"6",
+		"price":"300€",
+		"name":"Product 6",
+		"details":"Details of product 6"
+	}
+]

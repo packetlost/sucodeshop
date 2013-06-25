@@ -11,7 +11,7 @@
 	<meta name="description" content="SUCODE software online shop for e-commerce">
 	<meta name="viewport" content="width=device-width">
 
-	<title>SUCODE software shop</title>
+	<title>SUCODE Software shop</title>
 	
 	<link rel="stylesheet" href="css/normalize.min.css">
 	<link rel="stylesheet" href="css/main.css">
@@ -51,28 +51,25 @@
 			// how simpleCart should checkout, see the 
 			// checkout reference for more info 
 			checkout: { 
-				type: "SendForm" , 
-				url: "http://yourserver/your/custom/checkout/url",
-
-				 // http method for form, "POST" or "GET", default is "POST"
-		        method: "POST" , 
-
+				type: checkoutType, 
+				url: checkoutUrl,
+				// http method for form, "POST" or "GET", default is "POST"
+		        method: checkoutMethod, 
 		        // url to return to on successful checkout, default is null
 		        success: null, 
-
 		        // url to return to on cancelled checkout, default is null
-		        cancel: null ,
-
+		        cancel: null,
 		        // an option list of extra name/value pairs that can
 		        // be sent along with the checkout data
 		        extra_data: {
-		          email: $("email").val()
+		          "email": $("email").val(),
+		          "billinfo": $("billinfo").val()
 		        }				 
 			},
 	
 			// set the currency, see the currency 
 			// reference for more info
-			currency: "EUR",
+			currency: shopCurrency,
 	
 			// collection of arbitrary data you may want to store 
 			// with the cart, such as customer info
@@ -80,7 +77,7 @@
 	
 			// set the cart langauge 
 			// (may be used for checkout)
-			language: "english-us",
+			language: shopLanguage,
 	
 			// array of item fields that will not be 
 			// sent to checkout
@@ -101,7 +98,7 @@
 			shippingTotalRate: 0,
 	
 			// tax rate applied to cart subtotal
-			taxRate: 0.21,
+			taxRate: taxValue,
 	
 			// true if tax should be applied to shipping
 			taxShipping: true,
@@ -120,16 +117,29 @@
 		    beforeRemove        : null
 		});
 		
-		//config product details dialog
-		$(function(){
+		//Config product details dialog
+		// We must recall this config every time products are dynamically loaded!
+		function configProductDetails(){
+			//attach click function to product details icon 
 			$(".cbp-pgdetails").click(function(){
+				// extract clicked product id
+				productId = $(this).attr("prod");
+				productDetails = '';
+				foundProd = false;
+				for(i=0;!foundProd && i<products.length;i++){
+					if(products[i].id == productId){
+						productDetails = products[i].details;
+						foundProd=true;
+					}
+				}
+				// re-create the dialog every time we click (avoid anormal behaviour of dialogs pre-created)
 				$( "#view-details" ).dialog({
 					autoOpen:false,
 					modal:true,
 					closeOnEscape:true,
 					resizable:true,
 					draggable:true,
-					width:600,
+					width:'auto',
 					buttons: [ { 
 						text: "Close", 
 						click: function() { 
@@ -137,9 +147,69 @@
 						} 
 					} ]
 				});
+				$("#view-details").html(productDetails);
 				$("#view-details").dialog("open");		
 			});	
-		});
+		}
+		
+		// Function to retrieve products of a given category (ajax call)
+		function loadProducts(categoryId){
+			// set current to preconfig value
+			currentProductsService = productsService;
+			// replace {id} with categoryId
+			currentProductsService = currentProductsService.replace("{id}",categoryId);
+			// retrieve products
+			$.ajax({
+				url:currentProductsService,
+				type:"GET",
+				dataType:"json",
+				error:function(jqXHR, textStatus, errorThrown){
+					alert("Error loading products: " + errorThrown);
+				},
+				success:function(data,status,jqXHR){
+					products = data;
+					if(products!=null && products.length > 0){
+						$("#messages").hide();
+						printProducts(products,1);
+					}else{
+						$("#messages").show();
+						$("#products-grid").html('');
+					}
+				}
+			});
+		}
+		
+		// Print given products for the given page (only applies if paginateProducts config option is enabled)  
+		function printProducts(prods,pageNum){
+			// Products to print 
+			var productsToPrint = prods;
+			// Check for pagination
+			if(paginateProducts && pageNum > 0){
+				if(productsPerPage <= 0){
+					alert("Check productsPerPage config option!");
+				}				
+				productsToPrintTemp = [];
+				for(i=productsPerPage*(pageNum-1),j=0;i<productsPerPage*pageNum;i++,j++){
+					productsToPrintTemp[j]=productsToPrint[i];
+				}
+				productsToPrint=productsToPrintTemp;
+			}
+			// Generate HTML contents
+			productsHtml = '';
+			for(i=0;i<productsToPrint.length;i++){
+				productsHtml+="<li class=\"simpleCart_shelfItem\">";
+				productsHtml+="<input value=\"1\" class=\"item_Quantity\" type=\"hidden\"/>";
+				productsHtml+="<div class=\"cbp-pgcontent\"><div class=\"cbp-pgitem\"><div class=\"cbp-pgitem-flip\">";
+				productsHtml+="<img src=\"img/products/"+productsToPrint[i].id+".png\"/></div></div>";
+				productsHtml+="<ul class=\"cbp-pgoptions\"><li class=\"cbp-pgdetails\" prod=\""+productsToPrint[i].id+"\"><img src=\"img/document.png\"></img> Details </li>";
+				productsHtml+="<li class=\"cbp-pgoptcart item_add\"><img src=\"img/addtocart.png\"></img> Add </li></ul></div>";
+				productsHtml+="<div class=\"cbp-pginfo\"><h3 class=\"item_name\">"+productsToPrint[i].name+"</h3>";
+				productsHtml+="<span class=\"cbp-pgprice item_price\">"+productsToPrint[i].price+"</span></div></li>";
+			}
+			$("#products-grid").html(productsHtml);
+			// config product details
+			configProductDetails();
+		}
 	</script>
 </head>
 <body>
@@ -149,7 +219,6 @@
 	<div class="header-container">
 		<header class="wrapper clearfix">
 			<a href="index.html"><img src="img/logo.png"></img></a>
-			<!--  <h1 class="title"></h1> -->
 			<nav>
 				<div id="cart">
 					<button id="btncart">
@@ -158,6 +227,7 @@
 				</div>
 			</nav>
 			<script>
+				// define the shopping cart button
 				$("#btncart").button();
 				$("#btncart").click(
 					function(){
@@ -167,7 +237,7 @@
 							closeOnEscape:true,
 							resizable:true,
 							draggable:true,
-							width:600
+							width:'auto'
 						});
 				    	$("#view-cart").dialog("open");
 				    }
@@ -180,172 +250,59 @@
 		<div class="main wrapper clearfix">
 			<div id="categories_container">
 				<div id="categories">
-					<input type="radio" name="category" id="c1" checked="checked" />
-					<label for="c1">Virtualization</label> 
-					<input type="radio" name="category"	id="c2" />
-					<label for="c2">Architectures</label> 
-					<input type="radio"	name="category" id="c3" />
-					<label for="c3">Applications</label> 
-					<input	type="radio" name="category" id="c4" />
-					<label for="c4">SaaS</label> 
-					<input type="radio" name="category" id="c5" />
-					<label for="c5">Training</label>
+					<!-- Here are loaded categories dynamically -->
 				</div>
 			</div>
 			<script>
-				$(function() {
-					$("#categories").buttonset();
+				// load categories when we load the page
+				$.ajax({
+					url:categoriesService,
+					type:"GET",
+					dataType:"json",
+					error:function(jqXHR, textStatus, errorThrown){
+						alert("Error loading categories: " + errorThrown);
+					},
+					success:function(data,status,jqXHR){
+						selectedId = '';
+						categories = data;
+						categoriesHtml = '';
+						for(i=0;i<data.length;i++){
+							if(i==0){
+								selectedId = data[i].id;
+								categoriesHtml+=" <a href=\"#\" class=\"category-link\" category=\""+data[i].id+"\"><span id=\"c"+data[i].id+"\" class=\"category category-selected\">";
+							}else{
+								categoriesHtml+=" &nbsp;|&nbsp; <a href=\"#\" class=\"category-link\" category=\""+data[i].id+"\"><span id=\"c"+data[i].id+"\" class=\"category category-unselected\">";
+							}
+							categoriesHtml+=data[i].desc+" </span></a> "; 
+						}
+						$("#categories").html(categoriesHtml);
+						// Add event for category clicking
+						$(".category-link").click(function(evt){
+							evt.preventDefault();
+							$(".category").removeClass("category-selected");
+							$(".category").addClass("category-unselected");
+							$("#c"+$(this).attr("category")).addClass("category-selected");
+							loadProducts($(this).attr("category"));
+						});
+						// load products from selected category
+						loadProducts(selectedId);
+					}
 				});
 			</script>
+			
 			<div id="products">
-				<div id="messages" style="visibility:hidden; margin-top: 20px; padding: 0 .7em;" class="ui-state-highlight ui-corner-all">
-					<span style="float: left; margin-right: .3em;" class="ui-icon ui-icon-info"></span>
+				<div id="messages" class="ui-state-highlight ui-corner-all">
+					<span class="messages-span ui-icon ui-icon-info"></span>
 					There are no products for the selected category.
 				</div>	
 				<div id="cbp-pgcontainer" class="cbp-pgcontainer">
-					<ul class="cbp-pggrid">
-						<li class="simpleCart_shelfItem">
-							<input value="1" class="item_Quantity" type="hidden"/>
-							<div class="cbp-pgcontent">
-								<div class="cbp-pgitem">
-									<div class="cbp-pgitem-flip">
-										<img src="img/products/product.png" />
-									</div>
-								</div><!-- /cbp-pgitem -->
-								<ul class="cbp-pgoptions">	  								
-									<li class="cbp-pgdetails">
-										<img src="img/document.png"></img> Details
-									</li> 
-									<li class="cbp-pgoptcart item_add">
-										<img src="img/addtocart.png"></img> Add
-									</li>
-								</ul>
-								<!-- cbp-pgoptions -->
-							</div><!-- cbp-pgcontent -->
-							<div class="cbp-pginfo">
-								<h3 class="item_name">Product 1</h3>
-								<span class="cbp-pgprice item_price">300€</span>
-							</div>
-						</li>
-						<li class="simpleCart_shelfItem">
-							<input value="1" class="item_Quantity" type="hidden"/>
-							<div class="cbp-pgcontent">
-								<div class="cbp-pgitem">
-									<div class="cbp-pgitem-flip">
-										<img src="img/products/product.png" />
-									</div>
-								</div><!-- /cbp-pgitem -->
-								<ul class="cbp-pgoptions">	  								
-									<li class="cbp-pgdetails">
-										<img src="img/document.png"></img> Details
-									</li>
-									<li class="cbp-pgoptcart item_add">
-										<img src="img/addtocart.png"></img> Add
-									</li>
-								</ul>
-								<!-- cbp-pgoptions -->
-							</div><!-- cbp-pgcontent -->
-							<div class="cbp-pginfo">
-								<h3 class="item_name">Product 2</h3>
-								<span class="cbp-pgprice item_price">300€</span>
-							</div>
-						</li>
-						<li class="simpleCart_shelfItem">
-							<input value="1" class="item_Quantity" type="hidden"/>
-							<div class="cbp-pgcontent">
-								<div class="cbp-pgitem">
-									<div class="cbp-pgitem-flip">
-										<img src="img/products/product.png" />
-									</div>
-								</div><!-- /cbp-pgitem -->
-								<ul class="cbp-pgoptions">	  								
-									<li class="cbp-pgdetails">
-										<img src="img/document.png"></img> Details
-									</li>
-									<li class="cbp-pgoptcart item_add">
-										<img src="img/addtocart.png"></img> Add
-									</li>
-								</ul>
-								<!-- cbp-pgoptions -->
-							</div><!-- cbp-pgcontent -->
-							<div class="cbp-pginfo">
-								<h3 class="item_name">Product 3</h3>
-								<span class="cbp-pgprice item_price">300€</span>
-							</div>
-						</li>
-						<li class="simpleCart_shelfItem">
-							<input value="1" class="item_Quantity" type="hidden"/>
-							<div class="cbp-pgcontent">
-								<div class="cbp-pgitem">
-									<div class="cbp-pgitem-flip">
-										<img src="img/products/product.png" />
-									</div>
-								</div><!-- /cbp-pgitem -->
-								<ul class="cbp-pgoptions">	  								
-									<li class="cbp-pgdetails">
-										<img src="img/document.png"></img> Details
-									</li>
-									<li class="cbp-pgoptcart item_add">
-										<img src="img/addtocart.png"></img> Add
-									</li>
-								</ul>
-								<!-- cbp-pgoptions -->
-							</div><!-- cbp-pgcontent -->
-							<div class="cbp-pginfo">
-								<h3 class="item_name">Product 4</h3>
-								<span class="cbp-pgprice item_price">300€</span>
-							</div>
-						</li>
-						<li class="simpleCart_shelfItem">
-							<input value="1" class="item_Quantity" type="hidden"/>
-							<div class="cbp-pgcontent">
-								<div class="cbp-pgitem">
-									<div class="cbp-pgitem-flip">
-										<img src="img/products/product.png" />
-									</div>
-								</div><!-- /cbp-pgitem -->
-								<ul class="cbp-pgoptions">	  								
-									<li class="cbp-pgdetails">
-										<img src="img/document.png"></img> Details
-									</li>
-									<li class="cbp-pgoptcart item_add">
-										<img src="img/addtocart.png"></img> Add
-									</li>
-								</ul>
-								<!-- cbp-pgoptions -->
-							</div><!-- cbp-pgcontent -->
-							<div class="cbp-pginfo">
-								<h3 class="item_name">Product 5</h3>
-								<span class="cbp-pgprice item_price">300€</span>
-							</div>
-						</li>
-						<li class="simpleCart_shelfItem">
-							<input value="1" class="item_Quantity" type="hidden"/>
-							<div class="cbp-pgcontent">
-								<div class="cbp-pgitem">
-									<div class="cbp-pgitem-flip">
-										<img src="img/products/product.png" />
-									</div>
-								</div><!-- /cbp-pgitem -->
-								<ul class="cbp-pgoptions">	  								
-									<li class="cbp-pgdetails">
-										<img src="img/document.png"></img> Details
-									</li>
-									<li class="cbp-pgoptcart item_add">
-										<img src="img/addtocart.png"></img> Add
-									</li>
-								</ul>
-								<!-- cbp-pgoptions -->
-							</div><!-- cbp-pgcontent -->
-							<div class="cbp-pginfo">
-								<h3 class="item_name">Product 6</h3>
-								<span class="cbp-pgprice item_price">300€</span>
-							</div>
-						</li>
+					<ul class="cbp-pggrid" id="products-grid">
+						<!-- Products are loaded dynamically here -->	
 					</ul><!-- /cbp-pggrid -->
 				</div><!-- /cbp-pgcontainer -->
 			</div>
 			<script>
+				// initialize the products container
 				var shop = new cbpShop( document.getElementById( 'cbp-pgcontainer' ) ); 
 			</script>
 		</div><!-- #main -->
@@ -427,7 +384,7 @@
 			We must tell which taxes are applied manually. 
 		-->
 		<div class="taxes">
-			VAT (21%)
+			VAT (<script>document.write(taxValue*100);</script>%)
 		</div>
 		
 		<div class="intra-totals"></div>
@@ -455,8 +412,18 @@
 		<div class="separator"></div>
 
 		<div class="cart_additional_data">
-			<span class="cart_label">E-mail: </span>
-			<input type="text" name="email" id="email" size="30" maxlength="50" class="ui-widget"/>
+			<div class="input-label">
+				<span class="cart_label">E-mail (required): </span>
+			</div>
+			<div class="input-data">
+				<input type="text" name="email" id="email" size="30" maxlength="50" class="ui-widget"/>
+			</div>
+			<div class="input-label">
+				<span class="cart_label">Bill info (optional): </span>
+			</div>
+			<div class="input-data">	
+				<textarea name="billinfo" id="billinfo" class="ui-widget" maxlength="1000" cols="30" rows="8"></textarea>
+			</div>				
 		</div>
 
 		<div class="separator"></div>
@@ -485,23 +452,16 @@
 		$( "#btncart_empty" ).button();
 	</script>
 	<div id="view-details" title="Product details">
-		Product details here. details details details details details details details details details details details details
-		details details details details details details details details details details details details
-		details details details details details details details details details details details details
-		details details details details details details details details details details details details
- 		details details details details details details details details details details details details
-		details details details details details details details details details details details details
+		<!-- Product details loaded dynamically here --> 
 	</div>
 
 	<!--  Uncomment after setting your google analytics account -->
-	<!--  
-        <script>
-            var _gaq=[['_setAccount','your-google-analytics-account'],['_trackPageview']];
-            (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
-            g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
-            s.parentNode.insertBefore(g,s)}(document,'script'));
-        </script>
-        -->
+    <script>
+        var _gaq=[['_setAccount','UA-36410640-1'],['_trackPageview']];
+        (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+        g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+        s.parentNode.insertBefore(g,s)}(document,'script'));
+    </script>
 
 </body>
 </html>

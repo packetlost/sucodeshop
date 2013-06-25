@@ -1,0 +1,21 @@
+[
+	{
+		"id":"7",
+		"price":"300€",
+		"name":"Product 7",
+		"details":"Details of product 7"
+	},
+	{
+		"id":"8",
+		"price":"300€",
+		"name":"Product 8",
+		"details":"Details of product 8"
+	},
+	{
+		"id":"9",
+		"price":"300€",
+		"name":"Product 9",
+		"details":"Details of product 9"
+	}
+]
+

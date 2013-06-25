@@ -550,3 +550,40 @@ nav a:hover {
 .cart_label{
 	font-weight:bold;
 }
+
+.input-label{
+	width:50%;
+	float:left;
+	text-align:right;
+}
+
+.input-data{
+	width:50%;
+	float:left;
+}
+
+#messages{ 
+	margin-top: 20px;
+	padding: 0 .7em;
+}
+
+.messages-span{
+	float: left; 
+	margin-right: .3em;
+}
+
+.category-unselected{
+	color:#555555;
+	background:#ffffff;
+}
+
+.category-selected{
+	background:#555555;
+	color:#ffffff;
+}
+
+.category{
+	padding:2px;
+	font-weight:bold;
+}
+

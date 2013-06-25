@@ -1,0 +1,22 @@
+[
+	{
+		"id":"1",
+		"desc":"Virtualization"
+	},
+	{
+		"id":"2",
+		"desc":"Architectures"
+	},
+	{
+		"id":"3",
+		"desc":"Applications"
+	},
+	{
+		"id":"4",
+		"desc":"SaaS"
+	},
+	{
+		"id":"5",
+		"desc":"Training"
+	}
+]
