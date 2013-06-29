@@ -17,16 +17,16 @@
 	<link rel="stylesheet" href="css/main.css">
 	<link rel="stylesheet" href="css/smoothness/jquery-ui-1.10.3.custom.min.css">
 	<link rel="stylesheet" href="css/productgridlayout/default.css">
-	<link rel="stylesheet" href="css/productgridlayout/component.css">
+	<link rel="stylesheet" href="css/productgridlayout/component.css">	
 	
 	<script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
 	<script src="js/vendor/jquery-1.9.1.min.js"></script>
 	<script src="js/vendor/jquery-ui-1.10.3.custom.min.js"></script>
 	<script src="js/vendor/simpleCart.min.js"></script>
-	<script src="js/vendor/cbpShop.min.js"></script>
-	<script src="js/sucodeshop-config.js"></script>	
+	<script src="js/vendor/cbpShop.min.js"></script>	
+	<script src="js/sucodeshop-config.js"></script>		
 	<script src="js/plugins.js"></script>
-	<script src="js/main.js"></script>
+	<!--script src="js/main.js"></script-->
 	<script>
 		// ---------------------------
 		// SIMPLECARTJS CONFIGURATION
@@ -170,30 +170,30 @@
 					products = data;
 					if(products!=null && products.length > 0){
 						$("#messages").hide();
-						printProducts(products,1);
+						printProducts(1);
 					}else{
 						$("#messages").show();
 						$("#products-grid").html('');
+						$("#pagination-container").html('');
 					}
 				}
 			});
 		}
 		
 		// Print given products for the given page (only applies if paginateProducts config option is enabled)  
-		function printProducts(prods,pageNum){
+		function printProducts(pageNum){
 			// Products to print 
-			var productsToPrint = prods;
+			var productsToPrint = products;
 			// Check for pagination
-			if(paginateProducts && pageNum > 0){
-				if(productsPerPage <= 0){
-					alert("Check productsPerPage config option!");
-				}				
-				productsToPrintTemp = [];
-				for(i=productsPerPage*(pageNum-1),j=0;i<productsPerPage*pageNum;i++,j++){
-					productsToPrintTemp[j]=productsToPrint[i];
-				}
-				productsToPrint=productsToPrintTemp;
+			if(paginateProducts && productsPerPage <= 0){
+				alert("Check productsPerPage config option!");
 			}
+            var maxElem = Math.min(pageNum*productsPerPage,productsToPrint.length);
+			var productsToPrintTemp = [];
+			for(var i=(pageNum-1)*productsPerPage,j=0;i<maxElem;i++,j++){
+				productsToPrintTemp[j]=productsToPrint[i];
+			}
+			productsToPrint=productsToPrintTemp;
 			// Generate HTML contents
 			productsHtml = '';
 			for(i=0;i<productsToPrint.length;i++){
@@ -207,10 +207,33 @@
 				productsHtml+="<span class=\"cbp-pgprice item_price\">"+productsToPrint[i].price+"</span></div></li>";
 			}
 			$("#products-grid").html(productsHtml);
+			// show pagination
+    		if(paginateProducts && (products.length > 0)){
+    			var paginateHtml = '';
+    			var numPages = products.length / productsPerPage;
+    			if((products.length % productsPerPage)!=0){
+    				numPages++;
+    			}
+				for(var p=1;p<=numPages;p++){
+					if(pageNum == p){
+						paginateHtml+="<span class=\"current\">"+p+"</span>";
+					}
+					else{
+						paginateHtml+="<a href=\"#\" class=\"linkable-page\">"+p+"</a>";
+					}
+				}	
+    			$("#pagination-container").html(paginateHtml);
+    			$(".linkable-page").click(function(evt){
+    				evt.preventDefault();
+    				printProducts($(this).html());
+    			});
+       		}
 			// config product details
 			configProductDetails();
+            // Prevent click eventpropagation
+            return false;
 		}
-	</script>
+		</script>
 </head>
 <body>
 	<!--[if lt IE 7]>
@@ -302,6 +325,9 @@
 						<!-- Products are loaded dynamically here -->	
 					</ul><!-- /cbp-pggrid -->
 				</div><!-- /cbp-pgcontainer -->
+				<div id="pagination-container" class="pagination">
+					<!-- pagination is shown here -->
+            	</div>
 			</div>
 			<script>
 				// initialize the products container

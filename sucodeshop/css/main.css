@@ -587,3 +587,33 @@ nav a:hover {
 	font-weight:bold;
 }
 
+
+/***** pagination ********/
+.pagination {
+            font-weight:bold;
+			padding-left:25px;
+        }
+        
+.pagination a {
+    text-decoration: none;
+	border: solid 1px #cccccc;
+	color: #666666;
+}
+
+.pagination a, .pagination span {
+    display: block;
+    float: left;
+    padding: 0.3em 0.5em;
+    margin-right: 5px;
+	margin-bottom: 5px;
+}
+
+.pagination .current {
+    background: #666666;
+    color: #fff;
+	border: solid 1px #cccccc;
+}
+
+.linkable-page{
+}
+

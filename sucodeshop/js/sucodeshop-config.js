@@ -23,9 +23,9 @@ var imgFormat = 'png';
 taxValue = 0.21;
 
 // Set paginateProducts to true if there are many products for each category (for example, more than 10 products/category).
-var paginateProducts = false;
+var paginateProducts = true;
 // If pagination is enabled, determine the number of products per page. 
-var productsPerPage = 9;
+var productsPerPage = 3;
 
 // vars used to store categories and products (referenced from the shop page). Not initialized by default. 
 var categories;
